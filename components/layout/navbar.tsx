@@ -83,13 +83,8 @@ export function Navbar() {
             <Skeleton className="size-10 rounded-full" />
           ) : user ? (
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className="rounded-full ring-2 ring-transparent transition hover:ring-primary/40"
-                  aria-label="Open account menu"
-                >
-                  <UserAvatar src={user.image} name={user.name} />
-                </button>
+              <DropdownMenuTrigger className="rounded-full ring-2 ring-transparent transition hover:ring-primary/40" aria-label="Open account menu">
+                <UserAvatar src={user.image} name={user.name} />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-64">
                 <div className="flex items-center gap-3 px-3 py-3">
@@ -103,15 +98,11 @@ export function Navbar() {
                   </div>
                 </div>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href={roleHome(role)}>
-                    <LayoutDashboard /> Dashboard
-                  </Link>
+                <DropdownMenuItem onClick={() => router.push(roleHome(role))}>
+                  <LayoutDashboard /> Dashboard
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard/profile">
-                    <UserCog /> Update Profile
-                  </Link>
+                <DropdownMenuItem onClick={() => router.push("/dashboard/profile")}>
+                  <UserCog /> Update Profile
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onSelect={handleSignOut} className="text-destructive focus:text-destructive [&_svg]:text-destructive">

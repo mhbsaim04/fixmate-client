@@ -1,51 +1,45 @@
-import { mergeProps } from "@base-ui/react/merge-props"
-import { useRender } from "@base-ui/react/use-render"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import { cn } from "@/lib/utils";
+import {
+  APPROVAL_STATUS,
+  BOOKING_STATUS,
+  PAYMENT_STATUS,
+  ROLE_LABEL,
+  ROLE_TONE,
+} from "@/lib/constants";
+import type { ApprovalStatus, BookingStatus, PaymentStatus, Role } from "@/lib/types";
 
-const badgeVariants = cva(
-  "group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3!",
-  {
-    variants: {
-      variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
-        secondary:
-          "bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
-        destructive:
-          "bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
-        outline:
-          "border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
-        ghost:
-          "hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
-
-function Badge({
-  className,
-  variant = "default",
-  render,
-  ...props
-}: useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>) {
-  return useRender({
-    defaultTagName: "span",
-    props: mergeProps<"span">(
-      {
-        className: cn(badgeVariants({ variant }), className),
-      },
-      props
-    ),
-    render,
-    state: {
-      slot: "badge",
-      variant,
-    },
-  })
+export function Badge({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-muted px-2.5 py-1 text-xs font-semibold",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
-export { Badge, badgeVariants }
+export function StatusBadge({ status }: { status: BookingStatus }) {
+  const meta = BOOKING_STATUS[status] ?? BOOKING_STATUS.requested;
+  return (
+    <Badge className={meta.tone}>
+      <span className="size-1.5 rounded-full bg-current" />
+      {meta.label}
+    </Badge>
+  );
+}
+
+export function PaymentBadge({ status }: { status: PaymentStatus }) {
+  const meta = PAYMENT_STATUS[status] ?? PAYMENT_STATUS.unpaid;
+  return <Badge className={meta.tone}>{meta.label}</Badge>;
+}
+
+export function ApprovalBadge({ status }: { status: ApprovalStatus }) {
+  const meta = APPROVAL_STATUS[status] ?? APPROVAL_STATUS.pending;
+  return <Badge className={meta.tone}>{meta.label}</Badge>;
+}
+
+export function RoleBadge({ role }: { role: Role }) {
+  return <Badge className={ROLE_TONE[role] ?? ROLE_TONE.customer}>{ROLE_LABEL[role] ?? "Customer"}</Badge>;
+}

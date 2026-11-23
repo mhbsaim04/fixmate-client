@@ -84,7 +84,7 @@ export function TrendChart({
           <Tooltip
             cursor={{ fill: "hsl(var(--muted))" }}
             contentStyle={tooltipStyle}
-            formatter={(v: number) => [`${prefix}${v.toLocaleString("en-US")}`, ""]}
+            formatter={(v) => [`${prefix}${Number(v).toLocaleString("en-US")}`, ""]}
             labelStyle={{ fontWeight: 700 }}
           />
           <Bar dataKey="value" fill={color} radius={[8, 8, 0, 0]} maxBarSize={44} />

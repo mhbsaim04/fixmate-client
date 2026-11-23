@@ -6,7 +6,6 @@ import { Loader2, Search, X } from "lucide-react";
 import { CATEGORIES, SERVICE_MODES, SORT_OPTIONS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 
 /**
  * Search / filter / sort live in the URL (?search=&category=&mode=&sort=&page=).
@@ -57,29 +56,29 @@ export function ServiceFilters() {
           />
           {pending && <Loader2 className="absolute right-3.5 top-1/2 size-4 -translate-y-1/2 animate-spin text-muted-foreground" />}
         </div>
-        <Select aria-label="Category" value={params.get("category") ?? ""} onChange={(e) => push({ category: e.target.value || undefined })}>
+        <select aria-label="Category" value={params.get("category") ?? ""} onChange={(e) => push({ category: e.target.value || undefined })} className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm">
           <option value="">All categories</option>
           {CATEGORIES.map((c) => (
             <option key={c} value={c}>
               {c}
             </option>
           ))}
-        </Select>
-        <Select aria-label="Service mode" value={params.get("mode") ?? ""} onChange={(e) => push({ mode: e.target.value || undefined })}>
+        </select>
+        <select aria-label="Service mode" value={params.get("mode") ?? ""} onChange={(e) => push({ mode: e.target.value || undefined })} className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm">
           <option value="">Any service mode</option>
           {SERVICE_MODES.map((m) => (
             <option key={m} value={m}>
               {m}
             </option>
           ))}
-        </Select>
-        <Select aria-label="Sort" value={params.get("sort") ?? "newest"} onChange={(e) => push({ sort: e.target.value === "newest" ? undefined : e.target.value })}>
+        </select>
+        <select aria-label="Sort" value={params.get("sort") ?? "newest"} onChange={(e) => push({ sort: e.target.value === "newest" ? undefined : e.target.value })} className="h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm">
           {SORT_OPTIONS.map((o) => (
             <option key={o.value} value={o.value}>
               {o.label}
             </option>
           ))}
-        </Select>
+        </select>
         <Button
           variant="ghost"
           disabled={!hasFilters}
