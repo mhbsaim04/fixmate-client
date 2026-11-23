@@ -5,17 +5,16 @@ export function validateImage(file: File): string | null {
 }
 
 export async function uploadImage(file: File): Promise<string> {
-  const apiKey =
-    process.env.NEXT_PUBLIC_IMGBB_API_KEY || process.env.IMGBB_API_KEY || "";
-  if (!apiKey) throw new Error("ImgBB API key is not configured.");
-
   const form = new FormData();
   form.append("image", file);
-  const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+  const res = await fetch("/api/upload", {
     method: "POST",
     body: form,
   });
-  if (!res.ok) throw new Error("Image upload failed.");
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.message ?? "Image upload failed.");
+  }
   const data = await res.json();
-  return data?.data?.url ?? "";
+  return data.url;
 }

@@ -6,14 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
-import { CATEGORIES, SERVICE_MODES } from "@/lib/constants";
+import { CATEGORIES, CATEGORY_META, SERVICE_MODES } from "@/lib/constants";
 import { serviceSchema, type ServiceValues } from "@/lib/schemas";
 import { uploadImage } from "@/lib/upload";
 import type { Service } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input, Textarea } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import { ImagePicker } from "./image-picker";
 
 /** One form for both "Add a Service" and "Edit service". */
@@ -27,6 +26,8 @@ export function ServiceForm({ service, onSaved }: { service?: Service; onSaved: 
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<ServiceValues>({
     resolver: zodResolver(serviceSchema),
@@ -42,6 +43,9 @@ export function ServiceForm({ service, onSaved }: { service?: Service; onSaved: 
         }
       : { title: "", description: "", basePrice: "", estimatedDuration: "", serviceArea: "" },
   });
+
+  const selectedCategory = watch("category");
+  const selectedMode = watch("serviceMode");
 
   async function onSubmit(values: ServiceValues) {
     if (!file && !service?.image) {
@@ -82,26 +86,64 @@ export function ServiceForm({ service, onSaved }: { service?: Service; onSaved: 
         <Input id="title" placeholder="e.g. iPhone Screen Replacement" aria-invalid={!!errors.title} {...register("title")} />
       </Field>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Category" htmlFor="category" error={errors.category?.message}>
-          <Select id="category" defaultValue={service?.category ?? ""} aria-invalid={!!errors.category} {...register("category")}>
-            <option value="" disabled>Choose a category</option>
-            {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
-          </Select>
-        </Field>
-        <Field label="Service mode" htmlFor="serviceMode" error={errors.serviceMode?.message}>
-          <Select id="serviceMode" defaultValue={service?.serviceMode ?? ""} aria-invalid={!!errors.serviceMode} {...register("serviceMode")}>
-            <option value="" disabled>Choose a mode</option>
-            {SERVICE_MODES.map((m) => <option key={m}>{m}</option>)}
-          </Select>
-        </Field>
-        <Field label="Base price (USD)" htmlFor="basePrice" error={errors.basePrice?.message} hint="Shown on cards as the starting price.">
-          <Input id="basePrice" type="number" step="0.01" min="0" placeholder="45" aria-invalid={!!errors.basePrice} {...register("basePrice")} />
-        </Field>
-        <Field label="Estimated duration" htmlFor="estimatedDuration" error={errors.estimatedDuration?.message}>
-          <Input id="estimatedDuration" placeholder="2-3 hours" aria-invalid={!!errors.estimatedDuration} {...register("estimatedDuration")} />
-        </Field>
-      </div>
+      <Field label="Category" error={errors.category?.message}>
+        <input type="hidden" {...register("category")} />
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {CATEGORIES.map((c) => {
+            const meta = CATEGORY_META[c];
+            const Icon = meta.icon;
+            const active = selectedCategory === c;
+            return (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setValue("category", c, { shouldValidate: true })}
+                className={`flex flex-col items-center gap-1.5 rounded-xl border p-3 text-xs font-semibold transition-all ${
+                  active
+                    ? "border-primary bg-primary/10 text-primary shadow-sm ring-2 ring-primary/30"
+                    : "border-input bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                }`}
+              >
+                <span className={`grid size-9 place-items-center rounded-lg ${active ? "bg-primary text-primary-foreground" : meta.tone}`}>
+                  <Icon className="size-4" />
+                </span>
+                {c}
+              </button>
+            );
+          })}
+        </div>
+      </Field>
+
+      <Field label="Service mode" error={errors.serviceMode?.message}>
+        <input type="hidden" {...register("serviceMode")} />
+        <div className="grid grid-cols-2 gap-2">
+          {SERVICE_MODES.map((m) => {
+            const active = selectedMode === m;
+            return (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setValue("serviceMode", m, { shouldValidate: true })}
+                className={`rounded-xl border px-4 py-3 text-sm font-semibold transition-all ${
+                  active
+                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                    : "border-input bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                }`}
+              >
+                {m}
+              </button>
+            );
+          })}
+        </div>
+      </Field>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field label="Base price (USD)" htmlFor="basePrice" error={errors.basePrice?.message} hint="Shown on cards as the starting price.">
+            <Input id="basePrice" type="number" step="0.01" min="0" placeholder="45" aria-invalid={!!errors.basePrice} {...register("basePrice")} />
+          </Field>
+          <Field label="Estimated duration" htmlFor="estimatedDuration" error={errors.estimatedDuration?.message}>
+            <Input id="estimatedDuration" placeholder="2-3 hours" aria-invalid={!!errors.estimatedDuration} {...register("estimatedDuration")} />
+          </Field>
+        </div>
 
       <Field label="Service area" htmlFor="serviceArea" error={errors.serviceArea?.message}>
         <Input id="serviceArea" placeholder="Dhanmondi, Dhaka" aria-invalid={!!errors.serviceArea} {...register("serviceArea")} />

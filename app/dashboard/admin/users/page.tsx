@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { EmptyState, ErrorState, TableSkeleton } from "@/components/dashboard/states";
 import { RoleBadge } from "@/components/ui/badge";
-import { Select } from "@/components/ui/select";
 import { Table, TableWrap, TD, TH, THead, TR } from "@/components/ui/table";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { useApi } from "@/hooks/use-api";
@@ -71,18 +70,18 @@ export default function AdminUsersPage() {
                     <TD><RoleBadge role={u.role} /></TD>
                     <TD>
                       <div className="w-40">
-                        <Select
+                        <select
                           aria-label={`Role for ${u.name}`}
                           value={u.role}
                           disabled={self || busyId === u._id}
                           title={self ? "You can't change your own role" : undefined}
                           onChange={(e) => changeRole(u, e.target.value as Role)}
-                          className="h-9"
+                          className="h-9 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm"
                         >
                           <option value="customer">Customer</option>
                           <option value="technician">Technician</option>
                           <option value="admin">Admin</option>
-                        </Select>
+                        </select>
                       </div>
                     </TD>
                     <TD className="whitespace-nowrap">{formatDate(u.createdAt)}</TD>

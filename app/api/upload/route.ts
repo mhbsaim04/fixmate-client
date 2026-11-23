@@ -1,35 +1,37 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "@/lib/session";
 
-export const runtime = "nodejs";
-const MAX_BYTES = 5 * 1024 * 1024;
-
-/** Signed-in users upload an image here; we forward it to ImgBB with the server-side key. */
-export async function POST(req: Request) {
-  const session = await getServerSession();
-  if (!session) return NextResponse.json({ message: "Please sign in to upload images." }, { status: 401 });
-
-  const key = process.env.IMGBB_API_KEY;
-  if (!key) return NextResponse.json({ message: "IMGBB_API_KEY is not set on the server." }, { status: 500 });
-
-  const form = await req.formData();
-  const file = form.get("image");
-  if (!(file instanceof File)) return NextResponse.json({ message: "No image received." }, { status: 400 });
-  if (!file.type.startsWith("image/")) return NextResponse.json({ message: "Only image files are allowed." }, { status: 400 });
-  if (file.size > MAX_BYTES) return NextResponse.json({ message: "Image must be smaller than 5 MB." }, { status: 400 });
-
-  const body = new FormData();
-  body.append("image", Buffer.from(await file.arrayBuffer()).toString("base64"));
-
-  try {
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, { method: "POST", body });
-    const json = await res.json();
-    const url: string | undefined = json?.data?.url ?? json?.data?.display_url;
-    if (!res.ok || !url) {
-      return NextResponse.json({ message: json?.error?.message ?? "ImgBB rejected the upload." }, { status: 502 });
-    }
-    return NextResponse.json({ url });
-  } catch {
-    return NextResponse.json({ message: "Could not reach ImgBB." }, { status: 502 });
+export async function POST(request: Request) {
+  const apiKey = process.env.IMGBB_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json({ message: "ImgBB API key is not configured." }, { status: 500 });
   }
+
+  const form = await request.formData();
+  const file = form.get("image");
+  if (!(file instanceof File)) {
+    return NextResponse.json({ message: "No image provided." }, { status: 400 });
+  }
+  if (!file.type.startsWith("image/")) {
+    return NextResponse.json({ message: "Please select an image file." }, { status: 400 });
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    return NextResponse.json({ message: "Image must be under 5MB." }, { status: 400 });
+  }
+
+  const uploadForm = new FormData();
+  uploadForm.append("image", file);
+
+  const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+    method: "POST",
+    body: uploadForm,
+  });
+  if (!res.ok) {
+    return NextResponse.json({ message: "Image upload failed." }, { status: 502 });
+  }
+  const data = await res.json();
+  const url = data?.data?.url;
+  if (!url) {
+    return NextResponse.json({ message: "Image upload failed." }, { status: 502 });
+  }
+  return NextResponse.json({ url });
 }
