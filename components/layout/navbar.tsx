@@ -22,7 +22,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "./logo";
-import { ThemeToggle } from "./theme-toggle";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -50,9 +49,11 @@ export function Navbar() {
     });
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b bg-background/75 backdrop-blur-xl shadow-md">
       <div className="container flex h-[72px] items-center justify-between gap-4">
-        <Logo />
+        <span className="rounded-xl bg-[#4b6584] p-2 shadow-md ring-1 ring-[#4b6584]/40">
+          <Logo />
+        </span>
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {LINKS.map((l) => (
@@ -77,8 +78,6 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1.5">
-          <ThemeToggle />
-
           {isPending ? (
             <Skeleton className="size-10 rounded-full" />
           ) : user ? (

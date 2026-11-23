@@ -38,25 +38,25 @@
 
 @layer base {
   :root {
-    --background: 220 22% 96%;
+    --background: 210 40% 84%;
     --foreground: 222 38% 10%;
     --card: 0 0% 100%;
     --card-foreground: 222 38% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 38% 10%;
-    --primary: 228 88% 54%;
+    --primary: 213 27% 41%;
     --primary-foreground: 0 0% 100%;
     --secondary: 222 38% 10%;
     --secondary-foreground: 220 22% 96%;
     --muted: 220 18% 92%;
     --muted-foreground: 222 12% 38%;
-    --accent: 50 100% 52%;
+    --accent: 96 64% 75%;
     --accent-foreground: 222 38% 10%;
     --destructive: 0 76% 50%;
     --destructive-foreground: 0 0% 100%;
     --border: 220 16% 86%;
     --input: 220 14% 80%;
-    --ring: 228 88% 54%;
+    --ring: 213 27% 41%;
     --radius: 0.625rem;
   }
 
@@ -67,19 +67,19 @@
     --card-foreground: 220 24% 95%;
     --popover: 224 26% 9%;
     --popover-foreground: 220 24% 95%;
-    --primary: 228 96% 68%;
+    --primary: 213 27% 41%;
     --primary-foreground: 224 30% 6%;
     --secondary: 220 24% 95%;
     --secondary-foreground: 224 30% 6%;
     --muted: 224 20% 13%;
     --muted-foreground: 220 12% 68%;
-    --accent: 50 100% 52%;
+    --accent: 96 64% 75%;
     --accent-foreground: 222 38% 10%;
     --destructive: 0 70% 58%;
     --destructive-foreground: 0 0% 100%;
     --border: 224 18% 18%;
     --input: 224 16% 24%;
-    --ring: 228 96% 68%;
+    --ring: 213 27% 41%;
     --radius: 0.625rem;
   }
 
@@ -116,6 +116,22 @@
 }
 
 @layer components {
+  .container {
+    margin-inline: auto;
+    width: 100%;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container {
+      padding-inline: 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-inline: 2rem;
+    }
+  }
+
   /* One heading style reused by every section on every public page. */
   .section-title {
     @apply font-display text-3xl font-extrabold leading-tight md:text-4xl;
