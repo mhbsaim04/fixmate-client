@@ -49,11 +49,9 @@ export function Navbar() {
     });
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/75 backdrop-blur-xl shadow-md">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-secondary text-white shadow-md">
       <div className="container flex h-[72px] items-center justify-between gap-4">
-        <span className="rounded-xl bg-[#4b6584] p-2 shadow-md ring-1 ring-[#4b6584]/40">
-          <Logo />
-        </span>
+        <Logo />
 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
           {LINKS.map((l) => (
@@ -62,7 +60,7 @@ export function Navbar() {
               href={l.href}
               className={cn(
                 "relative rounded-lg px-4 py-2 text-sm font-semibold transition-colors",
-                isActive(l.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+                isActive(l.href) ? "text-white" : "text-white/75 hover:text-white",
               )}
             >
               {isActive(l.href) && (

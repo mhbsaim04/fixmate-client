@@ -17,7 +17,7 @@ export function Footer() {
       <div className="hazard h-2.5" aria-hidden />
       <div className="container grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1fr_1.2fr]">
         <div className="space-y-5">
-          <Logo light />
+          <Logo />
           <p className="max-w-xs text-sm leading-relaxed text-white/70">
             Verified repair technicians for your phone, laptop and home appliances. Track every job and pay only
             after the work is done.
