@@ -28,29 +28,36 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-      <section className="bg-bench border-b">
-        <div className="container py-12 md:py-16">
-          <h1 className="section-title">Find a technician for what&apos;s broken</h1>
-          <p className="section-lead">
-            Every listing below has been approved by our admins. Search, filter and sort, then send a repair request.
+      <section className="relative isolate overflow-hidden border-b bg-bench">
+        <div className="pointer-events-none absolute -right-20 -top-32 -z-10 size-[28rem] rounded-full bg-accent/30 blur-3xl" aria-hidden />
+        <div className="container py-12 md:py-16 lg:py-20">
+          <h1 className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            Find a repair service
+            <span className="mt-1 block text-primary">that fits your needs.</span>
+          </h1>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            Search trusted local technicians, compare your options, and choose the right repair for your device or home.
           </p>
         </div>
       </section>
 
-      <section className="container py-10">
+      <section id="services" className="container scroll-mt-24 py-10 md:py-14">
         <Suspense>
           <ServiceFilters />
         </Suspense>
 
-        <p className="mb-6 mt-8 text-sm text-muted-foreground" aria-live="polite">
-          {total > 0 ? (
-            <>
-              Showing <span className="font-semibold text-foreground">{services.length}</span> of{" "}
-              <span className="font-semibold text-foreground">{total}</span> services
-              {params.category ? <> in {params.category}</> : null}
-            </>
-          ) : null}
-        </p>
+        <div className="mb-6 mt-8 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">Available services</p>
+            <h2 className="mt-1 font-display text-2xl font-bold tracking-tight">
+              {params.category ? `${params.category} repairs` : "Explore repair services"}
+            </h2>
+          </div>
+          <p className="rounded-full border bg-card px-3.5 py-2 text-sm text-muted-foreground" aria-live="polite">
+            Showing <span className="font-bold text-foreground">{services.length}</span> of{" "}
+            <span className="font-bold text-foreground">{total}</span> services
+          </p>
+        </div>
 
         {services.length > 0 ? (
           <>

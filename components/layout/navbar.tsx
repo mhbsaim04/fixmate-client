@@ -109,7 +109,7 @@ export function Navbar() {
             </DropdownMenu>
           ) : (
             <div className="hidden items-center gap-2 sm:flex">
-              <Button asChild variant="ghost">
+              <Button asChild variant="ghost" className="hover:text-[#706fd3] hover:bg-[#706fd3]/10">
                 <Link href="/sign-in">Sign In</Link>
               </Button>
               <Button asChild>
@@ -138,7 +138,7 @@ export function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden border-t bg-background md:hidden"
+            className="overflow-hidden border-t border-white/10 bg-secondary text-white md:hidden"
           >
             <nav className="container flex flex-col gap-1 py-4" aria-label="Mobile">
               {LINKS.map((l) => (
@@ -148,7 +148,9 @@ export function Navbar() {
                   onClick={() => setOpen(false)}
                   className={cn(
                     "rounded-lg px-4 py-3 text-base font-semibold",
-                    isActive(l.href) ? "bg-accent/90 text-accent-foreground dark:bg-accent/20 dark:text-foreground" : "hover:bg-muted",
+                    isActive(l.href)
+                      ? "bg-accent/90 text-accent-foreground"
+                      : "text-white/85 hover:bg-white/10 hover:text-white",
                   )}
                 >
                   {l.label}
@@ -156,7 +158,7 @@ export function Navbar() {
               ))}
               {!user && !isPending && (
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <Button asChild variant="outline" onClick={() => setOpen(false)}>
+                  <Button asChild variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white" onClick={() => setOpen(false)}>
                     <Link href="/sign-in">Sign In</Link>
                   </Button>
                   <Button asChild onClick={() => setOpen(false)}>

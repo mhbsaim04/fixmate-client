@@ -47,12 +47,12 @@ export function DashboardShell({ role, initialUser, children }: Props) {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-white/20 bg-[#f7f1e3] shadow-sm transition-all duration-300 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-white/10 bg-secondary text-white shadow-sm transition-all duration-300 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
           collapsed && "lg:w-[88px]",
         )}
       >
-        <div className={cn("flex h-20 items-center justify-between border-b border-white/20 px-5", collapsed && "lg:justify-center lg:px-0")}>
+        <div className={cn("flex h-20 items-center justify-between border-b border-white/10 px-5", collapsed && "lg:justify-center lg:px-0")}>
           <Logo compact={collapsed} className={collapsed ? "lg:[&>span:last-child]:hidden" : ""} />
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpen(false)} aria-label="Close sidebar">
             <X />
@@ -60,7 +60,7 @@ export function DashboardShell({ role, initialUser, children }: Props) {
         </div>
 
         <nav className="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Dashboard">
-          <p className={cn("px-3 pb-3 pt-2 text-[11px] font-bold uppercase tracking-[0.16em] text-secondary/70", collapsed && "lg:hidden")}>
+          <p className={cn("px-3 pb-3 pt-2 text-[11px] font-bold uppercase tracking-[0.16em] text-white/60", collapsed && "lg:hidden")}>
             {roleLabel} workspace
           </p>
           {nav.map(({ href, label, icon: Icon, exact }) => {
@@ -74,12 +74,12 @@ export function DashboardShell({ role, initialUser, children }: Props) {
                 className={cn(
                   "group flex min-w-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200",
                   active
-                    ? "bg-secondary text-secondary-foreground shadow-md shadow-secondary/15"
-                    : "text-secondary hover:bg-black/5 hover:text-foreground",
+                    ? "bg-accent/90 text-accent-foreground shadow-md shadow-black/10"
+                    : "text-white/85 hover:bg-white/10 hover:text-white",
                   collapsed && "lg:justify-center lg:px-0",
                 )}
               >
-                <span className={cn("grid size-9 shrink-0 place-items-center rounded-lg", active ? "bg-white/10" : "bg-transparent group-hover:bg-black/5")}>
+                <span className={cn("grid size-9 shrink-0 place-items-center rounded-lg", active ? "bg-white/15" : "bg-transparent group-hover:bg-white/10")}>
                   <Icon className="size-[18px]" />
                 </span>
                 <span className={cn(collapsed && "lg:hidden")}>{label}</span>
@@ -88,11 +88,11 @@ export function DashboardShell({ role, initialUser, children }: Props) {
           })}
         </nav>
 
-        <div className="space-y-1 border-t border-white/20 bg-black/5 p-3">
+        <div className="space-y-1 border-t border-white/10 bg-black/10 p-3">
           <Link
             href="/"
             title="Back to Home"
-            className={cn("flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-secondary transition-colors hover:bg-black/5 hover:text-foreground", collapsed && "lg:justify-center lg:px-0")}
+            className={cn("flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-white/85 transition-colors hover:bg-white/10 hover:text-white", collapsed && "lg:justify-center lg:px-0")}
           >
             <span className="grid size-9 shrink-0 place-items-center rounded-lg"><Home className="size-[18px]" /></span>
             <span className={cn(collapsed && "lg:hidden")}>Back to Home</span>
@@ -100,7 +100,7 @@ export function DashboardShell({ role, initialUser, children }: Props) {
           <button
             onClick={handleSignOut}
             title="Sign Out"
-            className={cn("flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-secondary transition-colors hover:bg-black/5", collapsed && "lg:justify-center lg:px-0")}
+            className={cn("flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-rose-300 transition-colors hover:bg-rose-500/15", collapsed && "lg:justify-center lg:px-0")}
           >
             <span className="grid size-9 shrink-0 place-items-center rounded-lg"><LogOut className="size-[18px]" /></span>
             <span className={cn(collapsed && "lg:hidden")}>Sign Out</span>
@@ -109,7 +109,7 @@ export function DashboardShell({ role, initialUser, children }: Props) {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex h-20 items-center justify-between gap-3 border-b border-white/20 bg-[#f7f1e3] px-4 backdrop-blur-xl sm:px-6 lg:px-8">
+        <header className="sticky top-0 z-20 flex h-20 items-center justify-between gap-3 border-b border-border bg-background px-4 backdrop-blur-xl sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpen(true)} aria-label="Open sidebar">
               <Menu />
