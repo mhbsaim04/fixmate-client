@@ -64,11 +64,11 @@ export function TableSkeleton({ rows = 5 }: { rows?: number }) {
   );
 }
 
-export function StatsSkeleton({ count = 3 }: { count?: number }) {
+export function StatsSkeleton({ count = 3, columns = 4 }: { count?: number; columns?: 3 | 4 }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className={`grid gap-4 sm:grid-cols-2 ${columns === 3 ? "xl:grid-cols-3" : "xl:grid-cols-4"}`}>
       {Array.from({ length: count }).map((_, i) => (
-        <Skeleton key={i} className="h-[116px] rounded-2xl" />
+        <Skeleton key={i} className="h-32 rounded-2xl" />
       ))}
     </div>
   );

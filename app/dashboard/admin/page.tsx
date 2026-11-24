@@ -32,18 +32,18 @@ export default function AdminOverview() {
         <ErrorState message={error} onRetry={() => { users.reload(); services.reload(); bookings.reload(); payments.reload(); }} />
       ) : loading ? (
         <>
-          <StatsSkeleton count={4} />
+          <StatsSkeleton count={6} columns={3} />
           <Skeleton className="mt-6 h-72 rounded-2xl" />
         </>
       ) : (
         <div className="space-y-6">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <StatsCard label="Total Users" value={u.length} icon={Users} tone="blue" />
-            <StatsCard label="Total Technicians" value={u.filter((x) => x.role === "technician").length} icon={Wrench} tone="violet" />
-            <StatsCard label="Pending Services" value={s.filter((x) => x.approvalStatus === "pending").length} icon={ListChecks} tone="amber" hint="Waiting for your review" />
-            <StatsCard label="Total Bookings" value={b.length} icon={CalendarCheck} tone="rose" />
-            <StatsCard label="Revenue (Stripe)" value={revenue} prefix="$" decimals={2} icon={Banknote} tone="green" />
-            <StatsCard label="Approved Services" value={s.filter((x) => x.approvalStatus === "approved").length} icon={ShieldCheck} tone="green" />
+            <StatsCard label="Total Users" value={u.length} icon={Users} tone="blue" href="/dashboard/admin/users" />
+            <StatsCard label="Total Technicians" value={u.filter((x) => x.role === "technician").length} icon={Wrench} tone="violet" href="/dashboard/admin/users" />
+            <StatsCard label="Pending Services" value={s.filter((x) => x.approvalStatus === "pending").length} icon={ListChecks} tone="amber" hint="Waiting for your review" href="/dashboard/admin/services" />
+            <StatsCard label="Total Bookings" value={b.length} icon={CalendarCheck} tone="rose" href="/dashboard/admin/bookings" />
+            <StatsCard label="Revenue (Stripe)" value={revenue} prefix="$" decimals={2} icon={Banknote} tone="green" href="/dashboard/admin/transactions" />
+            <StatsCard label="Approved Services" value={s.filter((x) => x.approvalStatus === "approved").length} icon={ShieldCheck} tone="green" href="/dashboard/admin/services" />
           </div>
           <div className="grid gap-6 xl:grid-cols-2">
             <ChartCard title="Users by role">

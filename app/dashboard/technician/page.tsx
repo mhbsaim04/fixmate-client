@@ -42,10 +42,10 @@ export default function TechnicianOverview() {
       ) : (
         <div className="space-y-6">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <StatsCard label="Total Services" value={svc.length} icon={Wrench} tone="violet" />
-            <StatsCard label="Approved Services" value={svc.filter((s) => s.approvalStatus === "approved").length} icon={BadgeCheck} tone="green" />
-            <StatsCard label="Pending Requests" value={jobs.filter((j) => j.status === "requested").length} icon={Inbox} tone="amber" hint="Waiting for your reply" />
-            <StatsCard label="Paid earnings" value={earned} prefix="$" icon={Banknote} tone="blue" />
+            <StatsCard label="Total Services" value={svc.length} icon={Wrench} tone="violet" href="/dashboard/technician/my-services" />
+            <StatsCard label="Approved Services" value={svc.filter((s) => s.approvalStatus === "approved").length} icon={BadgeCheck} tone="green" href="/dashboard/technician/my-services" />
+            <StatsCard label="Pending Requests" value={jobs.filter((j) => j.status === "requested").length} icon={Inbox} tone="amber" hint="Waiting for your reply" href="/dashboard/technician/requests" />
+            <StatsCard label="Paid earnings" value={earned} prefix="$" icon={Banknote} tone="blue" href="/dashboard/technician/requests" />
           </div>
           <div className="grid gap-6 xl:grid-cols-2">
             <ChartCard title="Services by approval" subtitle="Where your listings stand">

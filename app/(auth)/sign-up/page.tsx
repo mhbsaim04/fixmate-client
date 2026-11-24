@@ -13,6 +13,7 @@ export default async function SignUpPage() {
     <AuthShell
       title="Create your account"
       subtitle="Join as a customer to book repairs, or as a technician to offer them."
+      imageSrc="/images/FixMate_signup_image.png"
       footer={
         <>
           Already have an account?{" "}

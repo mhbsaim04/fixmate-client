@@ -48,9 +48,9 @@ export default function CustomerOverview() {
       ) : (
         <div className="space-y-6">
           <div className="grid gap-4 md:grid-cols-3">
-            <StatsCard label="Total Requests" value={bookings.length} icon={ClipboardList} tone="blue" />
-            <StatsCard label="Active Jobs" value={active} icon={Hammer} tone="amber" hint="Requested, accepted or in progress" />
-            <StatsCard label="Completed Jobs" value={completed} icon={CheckCircle2} tone="green" />
+            <StatsCard label="Total Requests" value={bookings.length} icon={ClipboardList} tone="blue" href="/dashboard/customer/bookings" />
+            <StatsCard label="Active Jobs" value={active} icon={Hammer} tone="amber" hint="Requested, accepted or in progress" href="/dashboard/customer/bookings" />
+            <StatsCard label="Completed Jobs" value={completed} icon={CheckCircle2} tone="green" href="/dashboard/customer/bookings" />
           </div>
 
           <div className="grid gap-6 xl:grid-cols-2">

@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { RoleBadge } from "@/components/ui/badge";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 interface Props {
   role: Role;
@@ -31,6 +30,7 @@ export function DashboardShell({ role, initialUser, children }: Props) {
   // The live session wins so a profile update shows in the top bar instantly.
   const user = session?.user ?? initialUser;
   const nav = DASHBOARD_NAV[role];
+  const roleLabel = role.charAt(0).toUpperCase() + role.slice(1);
 
   useEffect(() => setOpen(false), [pathname]);
 
@@ -42,24 +42,27 @@ export function DashboardShell({ role, initialUser, children }: Props) {
     });
 
   return (
-    <div className="flex min-h-screen bg-muted/50">
+    <div className="flex min-h-screen bg-slate-50">
       {open && <div className="fixed inset-0 z-30 bg-secondary/60 backdrop-blur-sm lg:hidden" onClick={() => setOpen(false)} aria-hidden />}
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r bg-card transition-all duration-300 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-white/20 bg-[#f7f1e3] shadow-sm transition-all duration-300 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
           collapsed && "lg:w-[88px]",
         )}
       >
-        <div className={cn("flex h-[72px] items-center justify-between border-b px-5", collapsed && "lg:justify-center lg:px-0")}>
+        <div className={cn("flex h-20 items-center justify-between border-b border-white/20 px-5", collapsed && "lg:justify-center lg:px-0")}>
           <Logo compact={collapsed} className={collapsed ? "lg:[&>span:last-child]:hidden" : ""} />
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpen(false)} aria-label="Close sidebar">
             <X />
           </Button>
         </div>
 
-        <nav className="flex-1 space-y-1 overflow-y-auto p-4" aria-label="Dashboard">
+        <nav className="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Dashboard">
+          <p className={cn("px-3 pb-3 pt-2 text-[11px] font-bold uppercase tracking-[0.16em] text-secondary/70", collapsed && "lg:hidden")}>
+            {roleLabel} workspace
+          </p>
           {nav.map(({ href, label, icon: Icon, exact }) => {
             const active = isActive(href, exact);
             return (
@@ -67,39 +70,46 @@ export function DashboardShell({ role, initialUser, children }: Props) {
                 key={href}
                 href={href}
                 title={collapsed ? label : undefined}
+                aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold transition-colors",
-                  active ? "bg-secondary text-secondary-foreground shadow-md" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  "group flex min-w-0 items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-200",
+                  active
+                    ? "bg-secondary text-secondary-foreground shadow-md shadow-secondary/15"
+                    : "text-secondary hover:bg-black/5 hover:text-foreground",
                   collapsed && "lg:justify-center lg:px-0",
                 )}
               >
-                <Icon className="size-5 shrink-0" />
+                <span className={cn("grid size-9 shrink-0 place-items-center rounded-lg", active ? "bg-white/10" : "bg-transparent group-hover:bg-black/5")}>
+                  <Icon className="size-[18px]" />
+                </span>
                 <span className={cn(collapsed && "lg:hidden")}>{label}</span>
               </Link>
             );
           })}
         </nav>
 
-        <div className="space-y-1 border-t p-4">
+        <div className="space-y-1 border-t border-white/20 bg-black/5 p-3">
           <Link
             href="/"
             title="Back to Home"
-            className={cn("flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-muted-foreground hover:bg-muted hover:text-foreground", collapsed && "lg:justify-center lg:px-0")}
+            className={cn("flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-secondary transition-colors hover:bg-black/5 hover:text-foreground", collapsed && "lg:justify-center lg:px-0")}
           >
-            <Home className="size-5 shrink-0" /> <span className={cn(collapsed && "lg:hidden")}>Back to Home</span>
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg"><Home className="size-[18px]" /></span>
+            <span className={cn(collapsed && "lg:hidden")}>Back to Home</span>
           </Link>
           <button
             onClick={handleSignOut}
             title="Sign Out"
-            className={cn("flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-destructive hover:bg-destructive/10", collapsed && "lg:justify-center lg:px-0")}
+            className={cn("flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-secondary transition-colors hover:bg-black/5", collapsed && "lg:justify-center lg:px-0")}
           >
-            <LogOut className="size-5 shrink-0" /> <span className={cn(collapsed && "lg:hidden")}>Sign Out</span>
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg"><LogOut className="size-[18px]" /></span>
+            <span className={cn(collapsed && "lg:hidden")}>Sign Out</span>
           </button>
         </div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex h-[72px] items-center justify-between gap-3 border-b bg-card/85 px-4 backdrop-blur-xl md:px-8">
+        <header className="sticky top-0 z-20 flex h-20 items-center justify-between gap-3 border-b border-white/20 bg-[#f7f1e3] px-4 backdrop-blur-xl sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setOpen(true)} aria-label="Open sidebar">
               <Menu />
@@ -118,21 +128,27 @@ export function DashboardShell({ role, initialUser, children }: Props) {
                 <Home /> Home
               </Link>
             </Button>
+            <span className="hidden items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 sm:flex">
+              <span className="size-1.5 rounded-full bg-emerald-500" />
+              {roleLabel} workspace
+            </span>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <ThemeToggle />
-            <div className="flex items-center gap-3 rounded-full border bg-background py-1 pl-1 pr-4">
+            <div className="flex min-w-0 items-center gap-2 rounded-2xl border border-slate-200/80 bg-white py-1 pl-1 pr-2 shadow-sm sm:gap-3 sm:pr-3">
               <UserAvatar src={user.image} name={user.name} />
-              <div className="hidden leading-tight sm:block">
+              <div className="hidden min-w-0 leading-tight sm:block">
                 <p className="max-w-[140px] truncate text-sm font-bold">{user.name}</p>
+                <p className="text-[11px] text-muted-foreground">{roleLabel}</p>
               </div>
-              <RoleBadge role={role} />
+              <div className="hidden sm:block"><RoleBadge role={role} /></div>
             </div>
           </div>
         </header>
 
-        <main className="flex-1 p-4 md:p-8">{children}</main>
+        <main className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+          <div className="mx-auto w-full max-w-[1600px]">{children}</div>
+        </main>
       </div>
     </div>
   );

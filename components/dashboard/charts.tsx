@@ -12,16 +12,16 @@ const tooltipStyle = {
 
 export function ChartCard({ title, subtitle, children }: { title: string; subtitle?: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border bg-card p-6 shadow-sm">
-      <h2 className="text-lg font-bold">{title}</h2>
-      {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-      <div className="mt-5">{children}</div>
+    <section className="min-w-0 rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-md sm:p-6">
+      <h2 className="text-base font-bold tracking-tight sm:text-lg">{title}</h2>
+      {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
+      <div className="mt-5 min-w-0">{children}</div>
     </section>
   );
 }
 
 function ChartEmpty() {
-  return <div className="grid h-48 place-items-center rounded-xl bg-muted text-sm text-muted-foreground">Nothing to chart yet</div>;
+  return <div className="grid h-48 place-items-center rounded-2xl border border-dashed border-slate-200 bg-slate-50 text-sm text-muted-foreground">Nothing to chart yet</div>;
 }
 
 export function DonutChart({ data }: { data: { name: string; value: number; color: string }[] }) {
@@ -75,7 +75,7 @@ export function TrendChart({
 }) {
   if (!data.some((d) => d.value > 0)) return <ChartEmpty />;
   return (
-    <div className="h-56">
+    <div className="h-56 w-full min-w-0">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ left: -16, right: 4, top: 8 }}>
           <CartesianGrid vertical={false} stroke="hsl(var(--border))" strokeDasharray="4 4" />

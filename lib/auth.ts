@@ -21,6 +21,9 @@ if (process.env.NODE_ENV !== "production") globalForMongo.__fixmateMongo = clien
 const db = client.db("fixmate");
 
 const SIGNUP_ROLES = ["customer", "technician"];
+const ADMIN_EMAILS = [process.env.ADMIN_EMAIL, process.env.ADMIN_EMAIL2]
+  .filter(Boolean)
+  .map((e) => (e ?? "").toLowerCase());
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
@@ -50,8 +53,14 @@ export const auth = betterAuth({
         // Nobody can sign up as admin: anything except customer/technician becomes customer.
         before: async (user) => {
           const requested = (user as { role?: string }).role;
+          const email = (user as { email?: string }).email?.toLowerCase();
+          const role = ADMIN_EMAILS.includes(email ?? "")
+            ? "admin"
+            : SIGNUP_ROLES.includes(requested ?? "")
+              ? requested
+              : "customer";
           return {
-            data: { ...user, role: SIGNUP_ROLES.includes(requested ?? "") ? requested : "customer" },
+            data: { ...user, role },
           };
         },
       },

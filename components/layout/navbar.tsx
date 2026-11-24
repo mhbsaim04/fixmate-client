@@ -102,7 +102,7 @@ export function Navbar() {
                   <UserCog /> Update Profile
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onSelect={handleSignOut} className="text-destructive focus:text-destructive [&_svg]:text-destructive">
+                <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive [&_svg]:text-destructive">
                   <LogOut /> Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
