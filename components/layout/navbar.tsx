@@ -60,13 +60,13 @@ export function Navbar() {
               href={l.href}
               className={cn(
                 "relative rounded-lg px-4 py-2 text-sm font-semibold transition-colors",
-                isActive(l.href) ? "text-white" : "text-white/75 hover:text-white",
+                isActive(l.href) ? "text-accent-foreground font-bold" : "text-white/75 hover:text-white",
               )}
             >
               {isActive(l.href) && (
                 <motion.span
                   layoutId="nav-pill"
-                  className="absolute inset-0 -z-10 rounded-lg bg-accent/90 dark:bg-accent/20"
+                  className="absolute inset-0 -z-10 rounded-lg bg-accent"
                   transition={{ type: "spring", stiffness: 420, damping: 34 }}
                 />
               )}
