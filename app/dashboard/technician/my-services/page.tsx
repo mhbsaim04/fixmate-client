@@ -109,7 +109,7 @@ export default function MyServicesPage() {
       )}
 
       <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-h-[90vh] w-full max-w-[calc(100%-2rem)] overflow-y-auto sm:max-w-2xl">
           <DialogHeader>
             <DialogTitle>Edit service</DialogTitle>
             <DialogDescription>Saving sends the listing back to the admin for approval.</DialogDescription>

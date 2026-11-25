@@ -30,7 +30,7 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
     <>
       <section className="relative isolate overflow-hidden border-b bg-bench">
         <div className="pointer-events-none absolute -right-20 -top-32 -z-10 size-[28rem] rounded-full bg-accent/30 blur-3xl" aria-hidden />
-        <div className="container py-12 md:py-16 lg:py-20">
+        <div className="container py-10 md:py-12 lg:py-14">
           <h1 className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
             Find a repair service
             <span className="mt-1 block text-primary">that fits your needs.</span>
@@ -41,7 +41,7 @@ export default async function ServicesPage({ searchParams }: { searchParams: Pro
         </div>
       </section>
 
-      <section id="services" className="container scroll-mt-24 py-10 md:py-14">
+      <section id="services" className="container scroll-mt-24 pb-10 pt-7 md:pb-14 md:pt-9">
         <Suspense>
           <ServiceFilters />
         </Suspense>
