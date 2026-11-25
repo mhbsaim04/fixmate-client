@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logo } from "./logo";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -76,6 +77,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1.5">
+          {!isPending && user && role !== "admin" && <NotificationBell role={role} />}
           {isPending ? (
             <Skeleton className="size-10 rounded-full" />
           ) : user ? (

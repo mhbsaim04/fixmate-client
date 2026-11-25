@@ -96,6 +96,16 @@ export interface Payment {
   paidAt: string;
 }
 
+export interface Notification {
+  _id: string;
+  type: "booking" | "payment" | "service";
+  title: string;
+  message: string;
+  href: string;
+  createdAt: string;
+  readAt: string | null;
+}
+
 export interface ServiceQuery {
   search?: string;
   category?: string;

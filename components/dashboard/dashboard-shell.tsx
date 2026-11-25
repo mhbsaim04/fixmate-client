@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { RoleBadge } from "@/components/ui/badge";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { Logo } from "@/components/layout/logo";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 
 interface Props {
   role: Role;
@@ -135,6 +136,7 @@ export function DashboardShell({ role, initialUser, children }: Props) {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            {role !== "admin" && <NotificationBell role={role} />}
             <div className="flex min-w-0 items-center gap-2 rounded-2xl border border-slate-200/80 bg-white py-1 pl-1 pr-2 shadow-sm sm:gap-3 sm:pr-3">
               <UserAvatar src={user.image} name={user.name} />
               <div className="hidden min-w-0 leading-tight sm:block">
