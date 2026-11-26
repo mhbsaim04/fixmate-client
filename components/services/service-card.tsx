@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Clock, Home, MapPin, ShieldCheck, Store } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import { RatingStars } from "@/components/ui/rating";
 import { CATEGORY_META } from "@/lib/constants";
 import { cn, formatCurrency } from "@/lib/utils";
@@ -49,11 +49,9 @@ export function ServiceCard({ service }: { service: Service }) {
         </div>
 
         <div className="mt-auto pt-5">
-          <Button asChild variant="secondary" className="w-full justify-between rounded-xl">
-            <Link href={`/services/${service._id}`}>
-              View details <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
-          </Button>
+          <Link href={`/services/${service._id}`} className="uiverse-neon-button w-full">
+            View details <ArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
         </div>
       </div>
     </article>
