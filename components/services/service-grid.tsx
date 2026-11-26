@@ -1,9 +1,10 @@
 import { ServiceCard } from "./service-card";
+import { cn } from "@/lib/utils";
 import type { Service } from "@/lib/types";
 
-export function ServiceGrid({ services }: { services: Service[] }) {
+export function ServiceGrid({ services, className }: { services: Service[]; className?: string }) {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className={cn("grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4", className)}>
       {services.map((s) => (
         <ServiceCard key={s._id} service={s} />
       ))}

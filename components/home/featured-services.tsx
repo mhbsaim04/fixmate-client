@@ -11,7 +11,7 @@ export function FeaturedServices({ services }: { services: Service[] }) {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 className="section-title">Fresh from our technicians</h2>
-          <p className="section-lead">The six newest services approved by our admins.</p>
+          <p className="section-lead">The four newest services approved by our admins.</p>
         </div>
         <Button asChild variant="outline">
           <Link href="/services">Browse all services</Link>
@@ -19,7 +19,7 @@ export function FeaturedServices({ services }: { services: Service[] }) {
       </div>
       <div className="mt-10">
         {services.length ? (
-          <ServiceGrid services={services.slice(0, 6)} />
+          <ServiceGrid services={services.slice(0, 4)} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" />
         ) : (
           <EmptyState
             icon={PackageSearch}

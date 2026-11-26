@@ -30,6 +30,18 @@ export interface TechnicianInfo {
   bio?: string;
 }
 
+export interface ServiceReview {
+  _id: string;
+  customerName: string;
+  customerEmail?: string;
+  customerImage?: string | null;
+  rating: number;
+  review?: string;
+  comment?: string;
+  reviewedAt?: string;
+  createdAt?: string;
+}
+
 export interface Service {
   _id: string;
   title: string;
@@ -49,6 +61,7 @@ export interface Service {
   technician?: TechnicianInfo;
   avgRating?: number;
   reviewCount?: number;
+  reviews?: ServiceReview[];
 }
 
 export interface StatusHistoryItem {

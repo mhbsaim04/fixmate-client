@@ -8,7 +8,7 @@ import { getServices } from "@/lib/public-api";
 
 export default async function HomePage() {
   // The API returns approved + available services sorted by createdAt desc.
-  const { services } = await getServices({ sort: "newest", limit: 6 });
+  const { services } = await getServices({ sort: "newest", limit: 4 });
   return (
     <>
       <Hero />

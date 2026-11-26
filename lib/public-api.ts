@@ -1,5 +1,5 @@
 /** Server-side fetchers for PUBLIC endpoints. They never throw so pages still render if the API is down. */
-import type { Service, ServiceQuery, ServicesResponse } from "./types";
+import type { Service, ServiceQuery, ServicesResponse, ServiceReview } from "./types";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
 
@@ -31,5 +31,15 @@ export async function getService(id: string): Promise<Service | null> {
     return (await res.json()) as Service;
   } catch {
     return null;
+  }
+}
+
+export async function getServiceReviews(id: string): Promise<ServiceReview[]> {
+  try {
+    const res = await fetch(`${BASE}/api/services/${encodeURIComponent(id)}/reviews`, { cache: "no-store" });
+    if (!res.ok) return [];
+    return (await res.json()) as ServiceReview[];
+  } catch {
+    return [];
   }
 }
